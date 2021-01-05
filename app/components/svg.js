@@ -29,41 +29,61 @@ import Svg, {
   */
 
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
+
+const image = { uri: "https://reactjs.org/logo-og.png" };
 
 export default class SvgExample extends React.Component {
+  state = {
+    touch: "109 100",
+  };
+
+  onTouchEvent(name, ev) {
+    console.log(
+      `[${name}] ` +
+        `root_x: ${ev.nativeEvent.pageX}, root_y: ${ev.nativeEvent.pageY} ` +
+        `target_x: ${ev.nativeEvent.locationX}, target_y: ${ev.nativeEvent.locationY} ` +
+        `target: ${ev.nativeEvent.target}`
+    );
+  }
+
   render() {
     return (
       <View
-        style={[
-          StyleSheet.absoluteFill,
-          { alignItems: "center", justifyContent: "center" },
-        ]}
+        onStartShouldSetResponder={(ev) => true}
+        //onMoveShouldSetResponder={(ev) => false}
+        onResponderGrant={this.onTouchEvent.bind(this, "onResponderGrant")}
+        //onResponderReject={this.onTouchEvent.bind(this, "onResponderReject")}
+        onResponderMove={this.onTouchEvent.bind(this, "onResponderMove")}
+        onResponderRelease={this.onTouchEvent.bind(this, "onResponderRelease")}
+        //onResponderTerminationRequest={(ev) => true}
+        //onResponderTerminate={this.onTouchEvent.bind(this, "onResponderTerminate")}
+        style={{
+          alignItems: "center",
+          flex: 1,
+          justifyContent: "center",
+          backgroundColor: "tomato",
+        }}
       >
-        <Svg height="50%" width="50%" viewBox="0 0 100 100">
-          <Circle
-            cx="50"
-            cy="50"
-            r="45"
-            stroke="blue"
-            strokeWidth="2.5"
-            fill="green"
-          />
-          <Rect
-            x="15"
-            y="15"
-            width="70"
-            height="70"
-            stroke="red"
-            strokeWidth="2"
-            fill="yellow"
-          />
-          <Path
-            d="M 11
-           160 A 10 10 20 0 0 60 60"
-            stroke="black"
-          />
-        </Svg>
+        <ImageBackground
+          source={image}
+          style={{
+            image: {
+              flex: 1,
+              resizeMode: "cover",
+              justifyContent: "center",
+            },
+          }}
+        >
+          <Svg height="400" width="400">
+            <Polyline
+              points="0 0,100 100, 200, 200"
+              fill="none"
+              stroke="white"
+              strokeWidth="3"
+            />
+          </Svg>
+        </ImageBackground>
       </View>
     );
   }

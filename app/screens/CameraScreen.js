@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
+import Whiteboard from "../components/Whiteboard";
 
 function CameraScreen(props) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -61,7 +62,9 @@ function CameraScreen(props) {
           </TouchableOpacity>
         </View>
         <View style={styles.imageTaken}>
-          <Image source={{ uri: photoTaken }} style={styles.picTaken} />
+          <Whiteboard color="white" image={{ uri: photoTaken }} />
+
+          {/* <Image source={{ uri: photoTaken }} style={styles.picTaken} /> */}
         </View>
       </View>
     </View>
